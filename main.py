@@ -33,14 +33,15 @@ if dependabot_file is not None:
     actions_ecosystem_phrase = "package-ecosystem: \"github-actions\"".encode()
     has_actions_updates = True if actions_ecosystem_phrase in dependabot_file.decoded_content else False
 
-if has_actions_updates:
-    print(f"Repository already has dependabot updates for GitHub Actions")
-    exit()
+# if has_actions_updates:
+#     print(f"Repository already has dependabot updates for GitHub Actions")
+#     exit()
 
 message = "Add dependabot updates for dependencies in GitHub Actions workflows"
 dependabot_header = """version: 2
 updates:"""
-dependabot_body = """  - package-ecosystem: "github-actions"
+dependabot_body = """
+  - package-ecosystem: "github-actions"
     directory: \"/\"
     schedule:
       interval: \"weekly\""""
@@ -48,9 +49,10 @@ dependabot_body = """  - package-ecosystem: "github-actions"
 print(f"Creating remote branch {target_branch}")
 repo.create_git_ref(ref='refs/heads/' + target_branch, sha=main_branch.commit.sha)
 if dependabot_file is None:
-    repo.create_file(".github/dependabot.yml", message, dependabot_header + "\n" + dependabot_body)
+    repo.create_file(".github/dependabot.yml", message, dependabot_header + "\n" + dependabot_body, target_branch)
 else:
-    repo.update_file(".github/dependabot.yml", message, "\n" + dependabot_body)
+    new_body = dependabot_file.decoded_content + dependabot_body.encode()
+    repo.update_file(".github/dependabot.yml", message, new_body, dependabot_file.sha, target_branch)
 
 breakpoint()
 
