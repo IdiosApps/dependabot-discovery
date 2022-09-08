@@ -14,7 +14,9 @@ print(g.get_user().name)
 
 repoName = "danielt998/HanziToAnki"
 repo = g.get_repo(repoName)
-main_branch = repo.master_branch
+main_branch_name = repo.default_branch
+main_branch = repo.get_branch(main_branch_name)
+target_branch = "dependabot_github_actions"
 
 try:
     workflows_dir = repo.get_contents(".github/workflows")
@@ -43,6 +45,8 @@ dependabot_body = """  - package-ecosystem: "github-actions"
     schedule:
       interval: \"weekly\""""
 
+print(f"Creating remote branch {target_branch}")
+repo.create_git_ref(ref='refs/heads/' + target_branch, sha=main_branch.commit.sha)
 if dependabot_file is None:
     repo.create_file(".github/dependabot.yml", message, dependabot_header + "\n" + dependabot_body)
 else:
