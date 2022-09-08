@@ -31,6 +31,22 @@ if dependabot_file is not None:
     actions_ecosystem_phrase = "package-ecosystem: \"github-actions\"".encode()
     has_actions_updates = True if actions_ecosystem_phrase in dependabot_file.decoded_content else False
 
+if has_actions_updates:
+    print(f"Repository already has dependabot updates for GitHub Actions")
+    exit()
+
+message = "Add dependabot updates for dependencies in GitHub Actions workflows"
+dependabot_header = """version: 2
+updates:"""
+dependabot_body = """  - package-ecosystem: "github-actions"
+    directory: \"/\"
+    schedule:
+      interval: \"weekly\""""
+
+if dependabot_file is None:
+    repo.create_file(".github/dependabot.yml", message, dependabot_header + "\n" + dependabot_body)
+else:
+    repo.update_file(".github/dependabot.yml", message, "\n" + dependabot_body)
 
 breakpoint()
 
