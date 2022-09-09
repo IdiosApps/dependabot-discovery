@@ -23,9 +23,9 @@ GitHub themselves said it best:
 
 # Goals
 
-- [ ] Raise PR to specified repository which adds GitHub Action Dependabot capabilities 
+- [x] Raise PR to specified repository which adds GitHub Action Dependabot capabilities 
   - [x] For a repo which the user has write permissions
-  - [ ] Optionally: Create a fork so that PRs can be raised in repos which the user doesn't have write access
+  - [x] Optionally: Create a fork so that PRs can be raised in repos which the user doesn't have write access
 - [ ] Refactor code to have concepts of `Smells`, `Evidence`, and `Solutions`
   - The specified repo will be checked for some `Smells`
     - For example, a GitHub Action workflow uses a very old dependency
