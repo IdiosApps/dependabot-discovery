@@ -2,6 +2,25 @@
 
 Dependabot Discovery is a tool that automates adding GitHub Action dependabot capabilities to specified repositories.
 
+I did this [manually](https://github.com/hyperion-project/hyperion.ng/pull/1486) a few times, and I still see repositories that could benefit from this - especially when there is a lot of toil associated with checking many repositories.
+
+This project will let users quickly and easily add these capabilities to as many repositories as needed. It should work both for github.com, and for enterprise projects. 
+
+# Why keep these things up to date?
+
+GitHub themselves said it best:
+
+> Actions are often updated with bug fixes and new features to make automated processes more reliable, faster, and safer. When you enable Dependabot version updates for GitHub Actions, Dependabot will help ensure that references to actions in a repository's workflow.yml file are kept up to date.
+> 
+> https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot
+
+# Usage
+
+1. Clone this repository `COMMAND`
+2. Create a GitHub Personal Access Token (PAT) with repo permissions - LINK
+3. For now, edit main.py
+   - Goals section specifies how interaction will be improved
+
 # Goals
 
 - [ ] Raise PR to specified repository which adds GitHub Action Dependabot capabilities 
@@ -19,3 +38,4 @@ Dependabot Discovery is a tool that automates adding GitHub Action dependabot ca
 - [ ] Use the same model to facilitate safer `gradlew` upgrades - [dependabot does not yet do gradlew updates](https://github.com/IdiosApps/dependabot-gradlewrapper-test), and Gradle offers an Action to verify gradlew upgrades.
 - [ ] Let user choose options to save resources (only discover & fix suspected smells)
 - [ ] Let the user process multiple files
+- [ ] Add option to check through all repos in an org (good for cron)
